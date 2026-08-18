@@ -1,0 +1,89 @@
+User-agent: *
+Allow: /
+Allow: /api$
+Allow: /api.html
+Disallow: /api/
+Disallow: /admin
+
+# AI / LLM scrapers (Gemini, ChatGPT, Claude, Perplexity, ...)
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: Bytespider
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: ccbot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: diffbot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: embeddingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: FacebookBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+Sitemap: https://veildrop.fr/sitemap.xml

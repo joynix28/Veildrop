@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Report abuse of the VeilDrop temporary email service: spam, phishing, illegal content, harassment or misuse. Complaints are reviewed by the operator and acted on quickly.">
+  <meta name="robots" content="index, follow">
+  <title>VeilDrop — Report Abuse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f; --bg-card: #12121a; --border: #1e1e2e;
+      --text: #e4e4e7; --text-sec: #a1a1aa; --text-dim: #71717a;
+      --accent: #3b82f6; --accent-light: #1e3a5f;
+      --danger: #ef4444; --danger-light: #3b111180;
+      --radius: 8px; --mono: 'SF Mono', Menlo, Consolas, monospace;
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif; background: var(--bg);
+      color: var(--text); min-height: 100vh; display: flex;
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; width: 100%; max-width: 560px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .card-header {
+      padding: 28px 32px 20px; border-bottom: 1px solid var(--border);
+    }
+    .card-header h1 { font-size: 22px; font-weight: 700; }
+    .card-header p { font-size: 13px; color: var(--text-sec); margin-top: 6px; line-height: 1.5; }
+    .card-header .logo { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .card-header .logo .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+    .card-header .logo span { font-size: 14px; font-weight: 600; color: var(--text-sec); }
+    .card-body { padding: 24px 32px 28px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: var(--text-sec); }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 10px 12px; background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); color: var(--text); font-size: 14px;
+      font-family: inherit; transition: border-color 0.15s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--accent);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: var(--bg); }
+    .hint { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+    .upload-zone {
+      border: 2px dashed var(--border); border-radius: var(--radius); padding: 24px;
+      text-align: center; cursor: pointer; transition: all 0.15s; color: var(--text-dim);
+    }
+    .upload-zone:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .upload-zone p { margin-top: 8px; font-size: 13px; }
+    .upload-browse { color: var(--accent); font-weight: 500; text-decoration: underline; }
+    .upload-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 16px;
+      font-size: 12px; color: var(--text-sec);
+    }
+    .chip button {
+      background: none; border: none; color: var(--danger); cursor: pointer;
+      font-size: 14px; line-height: 1; padding: 0;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 20px; border: none; border-radius: var(--radius);
+      font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-ghost { background: transparent; color: var(--text-sec); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .success { text-align: center; padding: 32px 0; }
+    .success h3 { font-size: 18px; margin-bottom: 8px; }
+    .success p { color: var(--text-sec); font-size: 14px; }
+    .success a { color: var(--accent); text-decoration: none; }
+    .success a:hover { text-decoration: underline; }
+    .back-link { font-size: 13px; color: var(--text-dim); text-decoration: none; display: inline-block; margin-bottom: 16px; }
+    .back-link:hover { color: var(--accent); }
+    @media (max-width: 480px) {
+      .card-header, .card-body { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <div class="logo"><div class="dot"></div><span>VeilDrop</span></div>
+      <h1>Report Abuse</h1>
+      <p>If you received a threatening, illegal, or abusive email via VeilDrop, please report it here. You can attach screenshots, images, PDFs, or any relevant files.</p>
+    </div>
+    <div class="card-body">
+      <div id="form-container">
+        <div class="form-group">
+          <label>Your email (optional — for follow-up)</label>
+          <input type="email" id="f-email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Inbox address that sent the email (if known)</label>
+          <input type="text" id="f-inbox" placeholder="xxxxxxxxxxxx@veildrop.fr">
+        </div>
+        <div class="form-group">
+          <label>Reason *</label>
+          <select id="f-reason">
+            <option value="">Select a reason...</option>
+            <option value="threats">Death threats / threats of violence</option>
+            <option value="harassment">Harassment / bullying</option>
+            <option value="phishing">Phishing / scam</option>
+            <option value="spam">Spam / unsolicited bulk email</option>
+            <option value="illegal">Illegal content</option>
+            <option value="fraud">Identity fraud / impersonation</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date of the incident (approximate)</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="form-group">
+          <label>Description * (what happened)</label>
+          <textarea id="f-desc" placeholder="Describe what happened in detail." rows="5"></textarea>
+          <div class="hint">Max 5000 characters</div>
+        </div>
+        <div class="form-group">
+          <label>Attachments (optional)</label>
+          <div class="upload-zone" id="upload-zone">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Drop files here or <span class="upload-browse">browse</span></p>
+            <div class="hint">Images, PDFs, HTML, text — max 8MB each, up to 5 files</div>
+          </div>
+          <input type="file" id="f-files" multiple accept="image/*,.pdf,.html,.htm,.txt,.csv,.json,.eml" hidden>
+          <div id="file-list" class="upload-list"></div>
+        </div>
+        <button class="btn btn-danger" id="btn-submit" style="width:100%">Submit Report</button>
+      </div>
+      <div id="success" style="display:none" class="success">
+        <h3>Report Submitted</h3>
+        <p>Thank you. Your report has been sent to our team with all attachments.</p>
+        <p style="margin-top:16px"><a href="https://veildrop.fr">Back to VeilDrop</a></p>
+      </div>
+    </div>
+  </div>
+  <script>
+    const API = 'https://veildrop.chell-discord-officiel.workers.dev';
+    let files = [];
+    const zone = document.getElementById('upload-zone');
+    const fileInput = document.getElementById('f-files');
+
+    zone.addEventListener('click', () => fileInput.click());
+    zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.style.borderColor = 'var(--accent)'; });
+    zone.addEventListener('dragleave', () => { zone.style.borderColor = ''; });
+    zone.addEventListener('drop', (e) => { e.preventDefault(); zone.style.borderColor = ''; addFiles(e.dataTransfer.files); });
+    fileInput.addEventListener('change', (e) => addFiles(e.target.files));
+
+    function addFiles(list) {
+      for (const f of list) {
+        if (files.length >= 5) break;
+        if (f.size > 8 * 1024 * 1024) continue;
+        files.push(f);
+      }
+      renderFiles();
+    }
+
+    function renderFiles() {
+      const el = document.getElementById('file-list');
+      el.innerHTML = files.map((f, i) => {
+        const s = f.size < 1024 ? f.size + ' B' : f.size < 1048576 ? (f.size/1024).toFixed(1) + ' KB' : (f.size/1048576).toFixed(1) + ' MB';
+        return '<span class="chip">' + f.name + ' (' + s + ') <button data-i="' + i + '">&times;</button></span>';
+      }).join('');
+      el.querySelectorAll('button').forEach(b => {
+        b.onclick = () => { files.splice(+b.dataset.i, 1); renderFiles(); };
+      });
+    }
+
+    document.getElementById('btn-submit').addEventListener('click', async () => {
+      const reason = document.getElementById('f-reason').value;
+      const desc = document.getElementById('f-desc').value.trim();
+      if (!reason || !desc) { alert('Please fill in reason and description.'); return; }
+
+      const btn = document.getElementById('btn-submit');
+      btn.disabled = true; btn.textContent = 'Submitting...';
+
+      const fd = new FormData();
+      fd.append('reporter_email', document.getElementById('f-email').value.trim());
+      fd.append('inbox_address', document.getElementById('f-inbox').value.trim());
+      fd.append('reason', reason);
+      fd.append('description', desc);
+      fd.append('date', document.getElementById('f-date').value);
+      for (let i = 0; i < files.length; i++) fd.append('files[' + i + ']', files[i]);
+
+      try {
+        const r = await fetch(API + '/api/abuse', { method: 'POST', body: fd }).then(r => r.json());
+        if (r.error) { alert(r.error); btn.disabled = false; btn.textContent = 'Submit Report'; return; }
+        document.getElementById('form-container').style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+      } catch (e) {
+        alert('Failed to submit report.'); btn.disabled = false; btn.textContent = 'Submit Report';
+      }
+    });
+  </script>
+</body>
+</html>

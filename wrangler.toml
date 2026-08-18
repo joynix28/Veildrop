@@ -1,0 +1,41 @@
+name = "veildrop"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+# Replace with your Cloudflare account ID: https://dash.cloudflare.com/?to=/:account
+account_id = "YOUR_ACCOUNT_ID"
+
+# Cron: cleanup expired inboxes every hour
+[triggers]
+crons = ["0 * * * *"]
+
+# D1 Database — create one with: npx wrangler d1 create veildrop-db
+# then paste the database_id here (see scripts/setup.sh)
+[[d1_databases]]
+binding = "DB"
+database_name = "veildrop-db"
+database_id = "YOUR_D1_DATABASE_ID"
+
+# Environment variables — fill with YOUR values (see README section "Configuration")
+[vars]
+DOMAINS = "veildrop.fr,link2me.info,link2me.online,link2me.store"
+DEFAULT_TTL_SECONDS = "3600"  # 1 hour
+MAX_MESSAGE_SIZE = "5242880"  # 5MB
+SENDPULSE_SMTP_HOST = "smtp-pulse.com"
+SENDPULSE_SMTP_PORT = "465"
+SENDPULSE_SMTP_USER = "YOUR_SENDPULSE_SMTP_USER"
+SENDPULSE_SMTP_PASS = "YOUR_SENDPULSE_SMTP_PASS"
+ADMIN_KEYWORD = "YOUR_ADMIN_KEYWORD"
+DISCORD_WEBHOOK = "YOUR_DISCORD_WEBHOOK_URL"
+# Real mailbox that receives emails sent to legal addresses (contact@, abuse@, ...)
+OPERATOR_EMAIL = "YOUR_REAL_MAILBOX"
+
+# Static assets
+[assets]
+directory = "./src/web"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# Observability
+[observability]
+enabled = true

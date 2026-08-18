@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VeilDrop API — Temporary Email API, No API Key Required</title>
+<meta name="description" content="Free temporary email API. Receive and send anonymous emails programmatically. No API key, no signup, no cookies. Your 15-word recovery phrase IS your key. Simple curl-ready REST endpoints.">
+<meta name="keywords" content="temporary email api, temp mail api, disposable email api, anonymous email api, receive email api, send email api, no api key, free email api, veildrop api">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://veildrop.fr/api">
+<link rel="alternate" hreflang="en" href="https://veildrop.fr/api">
+<link rel="alternate" hreflang="fr" href="https://veildrop.fr/api?lang=fr">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://veildrop.fr/api">
+<meta property="og:title" content="VeilDrop API — Temporary Email API Without API Keys">
+<meta property="og:description" content="Receive and send anonymous temporary emails via simple REST calls. No API key, no signup, no cookies — the mnemonic is the key.">
+<meta property="og:site_name" content="VeilDrop">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VeilDrop API — Temporary Email API Without API Keys">
+<meta name="twitter:description" content="Receive and send anonymous temporary emails via simple REST calls. No API key, no signup, no cookies.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "VeilDrop",
+  "url": "https://veildrop.fr",
+  "description": "Free temporary email service with a public API. Create disposable inboxes, receive and send anonymous emails. No API key required.",
+  "inLanguage": ["en", "fr"],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://veildrop.fr/api",
+    "query-input": "required name=search"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "VeilDrop API",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "url": "https://veildrop.fr/api",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "description": "Temporary email REST API. Create inboxes, receive and send anonymous emails. No API key, no signup, no cookies."
+}
+</script>
+<style>
+:root {
+  --bg: #0b0f17; --bg-card: #131a26; --border: #1f2937;
+  --text: #e5e7eb; --text-dim: #9ca3af; --accent: #6c5ce7; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
+header { text-align: center; padding: 24px 0 8px; }
+header img { height: 44px; margin-bottom: 8px; }
+header h1 { font-size: 30px; background: linear-gradient(135deg,#6c5ce7,#a29bfe); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+header p { color: var(--text-dim); font-size: 15px; max-width: 640px; margin: 8px auto 0; }
+.lang-toggle { position: absolute; top: 16px; right: 16px; background: var(--bg-card); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; font-size: 13px; cursor: pointer; }
+.lang-toggle:hover { border-color: var(--accent); }
+.badge { display: inline-block; background: rgba(108,92,231,.15); color: #a29bfe; border: 1px solid rgba(108,92,231,.4); padding: 2px 10px; border-radius: 999px; font-size: 12px; margin: 12px 4px 0; }
+h2 { font-size: 21px; margin: 48px 0 12px; color: #fff; }
+h3 { font-size: 16px; margin: 24px 0 8px; color: #fff; }
+p, li { color: var(--text-dim); font-size: 14.5px; }
+ul, ol { padding-left: 22px; margin: 8px 0; }
+a { color: #a29bfe; }
+code, pre { font-family: var(--mono); font-size: 13px; }
+code { background: rgba(255,255,255,.06); padding: 1px 6px; border-radius: 5px; }
+pre { background: #0d1320; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; overflow-x: auto; margin: 12px 0; color: #d1d5db; }
+pre .c { color: #6b7280; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+th { color: #fff; font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; }
+td code { white-space: nowrap; }
+.meth { display: inline-block; width: 58px; text-align: center; border-radius: 5px; font-size: 11px; font-weight: 700; padding: 2px 0; font-family: var(--mono); }
+.m-get { background: rgba(16,185,129,.15); color: #34d399; }
+.m-post { background: rgba(59,130,246,.15); color: #60a5fa; }
+.m-del { background: rgba(239,68,68,.15); color: #f87171; }
+.note { background: rgba(108,92,231,.08); border-left: 3px solid #6c5ce7; border-radius: 6px; padding: 12px 16px; margin: 16px 0; font-size: 13.5px; color: var(--text-dim); }
+.copy { float: right; background: var(--border); color: #fff; border: none; border-radius: 6px; padding: 3px 10px; font-size: 11px; cursor: pointer; }
+.copy:hover { background: #2b3a4f; }
+h2 .copy { margin-top: 4px; }
+.quick { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+.q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.q b { display: block; color: #fff; font-size: 14px; margin-bottom: 4px; }
+.q span { font-size: 12.5px; color: var(--text-dim); }
+footer { text-align: center; color: #4b5563; font-size: 12.5px; padding: 32px 0; border-top: 1px solid var(--border); margin-top: 64px; }
+[data-lang] { display: none; }
+[data-lang].active { display: block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <button class="lang-toggle" id="lang-toggle" title="Switch language">🇬🇧 EN</button>
+  <header>
+    <img src="/favicon.svg" alt="VeilDrop logo" width="44" height="44">
+    <h1>VeilDrop API</h1>
+    <p data-lang="en" class="active">Disposable email addresses, fully programmable. Receive and send anonymous emails from any language — <strong>no API key, no signup, no cookies</strong>.</p>
+    <p data-lang="fr">Des adresses email jetables, entièrement programmables. Recevez et envoyez des emails anonymes depuis n'importe quel langage — <strong>pas d'API key, pas d'inscription, pas de cookies</strong>.</p>
+    <div>
+      <span class="badge">Free forever · Gratuit à vie</span>
+      <span class="badge">No API key · Sans clé</span>
+      <span class="badge">REST / JSON</span>
+      <span class="badge">EU-hosted · Hébergé UE</span>
+    </div>
+  </header>
+
+  <div data-lang="en">
+  <h2>Why no API key?</h2>
+  <p>Your <strong>15-word recovery phrase</strong> is the key. The inbox ID is cryptographically derived from the phrase (SHA-256), so possession of the phrase proves ownership. Nothing to register, nothing to leak, nothing to rotate. You create the inbox with your phrase and read it back with the same phrase — even years later. A short <strong>access token</strong> is also issued at creation for convenience (no spaces to URL-encode).</p>
+
+  <h2>Quick start</h2>
+  <div class="quick">
+    <div class="q"><b>📥 Receive</b><span>Create an inbox, poll for messages</span></div>
+    <div class="q"><b>📤 Send</b><span>Send anonymous emails with a Reply-To</span></div>
+    <div class="q"><b>🔑 Recover</b><span>Same phrase = same address, always</span></div>
+    <div class="q"><b>🔥 Burn</b><span>Permanently delete an inbox in one call</span></div>
+  </div>
+
+  <h2>Endpoints <button class="copy" data-copy="base">copy base</button></h2>
+  <table>
+    <tr><th>Method</th><th>Endpoint</th><th>Purpose</th></tr>
+    <tr><td><span class="meth m-post">POST</span></td><td><code>/api/v1/inbox</code></td><td>Create an inbox (returns mnemonic + token)</td></tr>
+    <tr><td><span class="meth m-get">GET</span></td><td><code>/api/v1/mail</code></td><td>List messages (metadata only, <strong>no body</strong>)</td></tr>
+    <tr><td><span class="meth m-get">GET</span></td><td><code>/api/v1/mail/:msgId</code></td><td>Read once — body delivered, message destroyed</td></tr>
+    <tr><td><span class="meth m-post">POST</span></td><td><code>/api/v1/send</code></td><td>Send an email from this inbox address</td></tr>
+    <tr><td><span class="meth m-post">POST</span></td><td><code>/api/v1/extend</code></td><td>Extend the inbox lifetime</td></tr>
+    <tr><td><span class="meth m-del">DELETE</span></td><td><code>/api/v1/mail</code></td><td>Burn the inbox permanently</td></tr>
+    <tr><td><span class="meth m-get">GET</span></td><td><code>/api/v1/status</code></td><td>Service status &amp; limits</td></tr>
+  </table>
+  <p>Base URL: <code>https://veildrop.fr</code>. All responses are JSON. Auth: pass your key (mnemonic <em>or</em> token) as <code>?key=...</code> or the <code>X-API-Key</code> header. <strong>The key alone identifies the inbox — no inbox ID needed in the URL.</strong></p>
+
+  <h2>1. Create an inbox</h2>
+  <pre><span class="c"># Create — the server generates your 15-word mnemonic AND a short access token.
+# Save both: the token is the easy key, the mnemonic is the recovery key.</span>
+curl -X POST https://veildrop.fr/api/v1/inbox \
+  -H "Content-Type: application/json" \
+  -d '{"ttl":"10m"}'
+
+<span class="c"># → {"inbox_id":"8f14e45f...","address":"8f14e45fceea167a@veildrop.fr",
+#    "mnemonic":"maid tissue pear room ... peace bacon",
+#    "token":"51d5720a64aa494ab377f5c530a3f68e",
+#    "auth":"mnemonic","key":"maid tissue pear room ... peace bacon",...}</span>
+
+<span class="c"># Deterministic address from your own 15-word mnemonic — always the same address</span>
+curl -X POST https://veildrop.fr/api/v1/inbox \
+  -H "Content-Type: application/json" \
+  -d '{"mnemonic":"abandon ability able about above absent absorb abstract absurd abuse access accident","ttl":"1d"}'</pre>
+  <div class="note">💡 <strong>Recovery:</strong> recreate the same inbox at any time by posting the same mnemonic. The address and inbox ID are derived from the phrase alone — nothing is stored server-side.</div>
+
+  <h2>1b. End-to-end encrypted inboxes (E2EE)</h2>
+  <pre><span class="c"># Generate an RSA keypair client-side, wrap the private key with a key
+# derived from your mnemonic (KEK = SHA-256 of the phrase), then send:
+#   pubkey      = SPKI export, base64
+#   privkey_enc = base64(iv) + ":" + base64(AES-GCM(KEK, PKCS8))</span>
+curl -X POST https://veildrop.fr/api/v1/inbox \
+  -H "Content-Type: application/json" \
+  -d '{"mnemonic":"abandon ability able ...","ttl":"1d","e2ee":true}'
+
+<span class="c"># → {... "e2ee":true,"pubkey":"MIIBIjANBgkq...","privkey_enc":"QdFuF5...:9V4k..."}
+# The server stores ONLY the public key + wrapped private key. Incoming emails
+# are encrypted to your public key (encv2: format) before touching the database.
+# Nobody — operator included — can decrypt without the mnemonic.</span>
+
+<span class="c"># Reading: list/detail responses include "e2ee":true and "privkey_enc".
+# Unwrap the private key in your browser and decrypt each encv2: field:
+#   encv2:&lt;b64(RSA-OAEP(public, dataKey))&gt;:&lt;b64(iv)&gt;:&lt;b64(cipher)&gt;
+# Field = RSA-OAEP-unwrap(dataKey) then AES-256-GCM-decrypt(iv, dataKey, cipher).</span>
+curl -X GET "https://veildrop.fr/api/v1/mail?key=YOUR_TOKEN"</pre>
+  <pre><span class="c"># Node.js example — decrypt a message with your mnemonic (WebCrypto, Node 22+)</span>
+import { webcrypto } from 'node:crypto';
+const crypto = webcrypto; // global in Node 22
+const MN = "your 15 words here".split(' ');
+const b64 = (u) => Buffer.from(u).toString('base64');
+const unb64 = (s) => new Uint8Array(Buffer.from(s, 'base64'));
+
+const kek = await crypto.subtle.importKey('raw',
+  new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(MN.join(' ')))),
+  { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+
+const res = await fetch(`https://veildrop.fr/api/v1/inbox/${INBOX_ID}/messages?key=${MN.join(' ')}`);
+const data = await res.json();            // e2ee: true, privkey_enc: "iv:wrapped"
+const [iv, wrapped] = data.privkey_enc.split(':');
+const pkcs8 = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(iv) }, kek, unb64(wrapped));
+const privKey = await crypto.subtle.importKey('pkcs8', pkcs8, { name: 'RSA-OAEP', hash: 'SHA-256' }, false, ['decrypt']);
+
+async function decryptField(field) {
+  if (!field || !field.startsWith('encv2:')) return field;
+  const [_, dkw, iv2, ct] = field.split(':');
+  const dk = await crypto.subtle.decrypt({ name: 'RSA-OAEP' }, privKey, unb64(dkw));
+  const aesKey = await crypto.subtle.importKey('raw', dk, { name: 'AES-GCM' }, false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(iv2) }, aesKey, unb64(ct));
+  return new TextDecoder().decode(plain);
+}
+const m = data.messages[0];
+console.log(await decryptField(m.subject), await decryptField(m.body_enc));</pre>
+  <div class="note">⚠️ <strong>Trade-offs:</strong> the server cannot scan E2EE mailboxes for abuse or malware, and the GDPR export returns raw encrypted data (plus your keys). Outgoing email is always plain SMTP. Two modes: let the server generate the keypair (send <code>e2ee:true</code> — the mnemonic transits at creation but is never stored), or generate the keypair yourself and send <code>pubkey</code> + <code>privkey_enc</code> (the mnemonic never touches the network, like the web client).</div>
+
+  <h2>2. Read messages (read-once)</h2>
+  <p><strong>Read-once policy:</strong> the list returns <em>metadata only</em> (sender, subject, attachments, date — never the body). Opening a message delivers the full content and <strong>destroys it immediately</strong>. One read = one copy, guaranteed.</p>
+  <pre><span class="c"># One variable, that's all you ever need to paste:</span>
+KEY="51d5720a64aa494ab377f5c530a3f68e"
+
+curl -H "X-API-Key: $KEY" https://veildrop.fr/api/v1/mail
+<span class="c"># → {"address":"8f14e45fceea167a@veildrop.fr","messages":[{ "id":"...","from":"sender@x.com",
+#      "subject":"Verify your account","has_attachments":false,"attachments":[],
+#      "received_at":...,"is_read":false}],...}
+# NO body in the list — bodies are only delivered by reading a message.</span>
+
+<span class="c"># Read once — returns the full message, then deletes it server-side:</span>
+curl -H "X-API-Key: $KEY" https://veildrop.fr/api/v1/mail/MESSAGE_ID
+<span class="c"># → { ..., "body":"...", "body_html":"...", "attachments":[...], "deleted_after_read":true }</span></pre>
+
+  <h2>3. Send an email</h2>
+  <pre>curl -X POST -H "X-API-Key: $KEY" -H "Content-Type: application/json" \
+  https://veildrop.fr/api/v1/send \
+  -d '{"to":"someone@example.com","subject":"Hello from VeilDrop API","body":"Plain text body","body_html":"<b>HTML body</b>"}'
+
+<span class="c"># → {"ok":true,"email_id":"...","smtp_remaining":190,"provider":"sendpulse"}</span></pre>
+  <p>The inbox address is set as <strong>Reply-To</strong>, so the recipient can answer and the reply lands in your inbox. Attachments supported: <code>attachments:[{filename, content(base64), mimeType}]</code> (max 10 files, 5 MB each, total ≤ 25 MB).</p>
+
+  <h2>4. Extend lifetime</h2>
+  <pre>curl -X POST -H "X-API-Key: $KEY" -H "Content-Type: application/json" \
+  https://veildrop.fr/api/v1/extend -d '{"ttl":"1h"}'
+<span class="c"># → {"ok":true,"expires_at":...,"ttl_seconds":3600}</span></pre>
+  <table>
+    <tr><th>ttl value</th><th>Lifetime</th></tr>
+    <tr><td><code>10m</code></td><td>10 minutes (default)</td></tr>
+    <tr><td><code>1h</code></td><td>1 hour</td></tr>
+    <tr><td><code>1d</code></td><td>1 day</td></tr>
+    <tr><td><code>20d</code></td><td>20 days (max)</td></tr>
+  </table>
+
+  <h2>5. Burn an inbox</h2>
+  <pre>curl -X DELETE -H "X-API-Key: $KEY" https://veildrop.fr/api/v1/mail
+<span class="c"># → {"ok":true,"message":"Inbox permanently deleted"}</span></pre>
+  <p><em>Long form</em> (with inbox ID) still works: <code>/api/v1/inbox/:id/messages</code>, <code>/api/v1/inbox/:id/message/:messageId</code>, <code>/api/v1/inbox/:id/send</code>, <code>/api/v1/inbox/:id/extend</code>, <code>DELETE /api/v1/inbox/:id</code> — with the same read-once semantics.</p>
+
+  <h2>GDPR</h2>
+  <p>Your data, your control — both endpoints require your key (mnemonic or token):</p>
+  <pre><span class="c"># Export everything (full bodies included, attachment contents excluded by design):</span>
+curl -H "X-API-Key: $KEY" https://veildrop.fr/api/gdpr/export/:inboxId
+
+<span class="c"># Permanent deletion of all data:</span>
+curl -X POST -H "X-API-Key: $KEY" https://veildrop.fr/api/gdpr/delete/:inboxId</pre>
+
+  <h2>Rate limits &amp; fair use</h2>
+  <ul>
+    <li>No spam or abusive sending — the service is for legitimate temporary-email use (signups, verifications, testing).</li>
+    <li>Outbound sending: 200 emails/day service-wide, ~10/hour per IP.</li>
+    <li>Inbox creation: ~10/hour per IP. Message reads: ~60/hour per inbox.</li>
+    <li>Inboxes and messages expire automatically; data is purged from EU servers (Cloudflare D1, London region) within 24 hours of expiry.</li>
+    <li>All emails include a sender disclaimer and abuse-report link.</li>
+  </ul>
+
+  <h2>Error codes</h2>
+  <table>
+    <tr><th>Code</th><th>Meaning</th></tr>
+    <tr><td><code>400</code></td><td>Malformed request or invalid input</td></tr>
+    <tr><td><code>401</code></td><td>Invalid or missing key (mnemonic or token)</td></tr>
+    <tr><td><code>403</code></td><td>Reserved address / blocked IP</td></tr>
+    <tr><td><code>404</code></td><td>Inbox or message not found / expired</td></tr>
+    <tr><td><code>409</code></td><td>Address already taken</td></tr>
+    <tr><td><code>413</code></td><td>Request body too large</td></tr>
+    <tr><td><code>429</code></td><td>Rate limit exceeded</td></tr>
+    <tr><td><code>500</code></td><td>Server error (provider-side, no details leaked)</td></tr>
+    <tr><td><code>503</code></td><td>Service temporarily disabled</td></tr>
+  </table>
+
+  <h2>Example: Python</h2>
+  <pre>import requests
+
+BASE = "https://veildrop.fr"
+MNEMONIC = "abandon ability able about above absent absorb abstract absurd abuse access accident"
+
+r = requests.post(f"{BASE}/api/v1/inbox", json={"mnemonic": MNEMONIC, "ttl": "1d"})
+inbox = r.json()
+print("Address:", inbox["address"], "| Token:", inbox["token"])
+
+msgs = requests.get(f"{BASE}/api/v1/mail",
+                    headers={"X-API-Key": inbox["token"]}).json()
+for m in msgs["messages"]:
+    print(m["from"], "-", m["subject"])
+    full = requests.get(f"{BASE}/api/v1/mail/{m['id']}",
+                        headers={"X-API-Key": inbox["token"]}).json()
+    print(full["body"])  # read-once: message is now destroyed</pre>
+
+  <h2>Example: JavaScript (Node)</h2>
+  <pre>const MNEMONIC = "abandon ability able about above absent absorb abstract absurd abuse access accident";
+
+// Create / recover the inbox
+const created = await fetch("https://veildrop.fr/api/v1/inbox", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ mnemonic: MNEMONIC, ttl: "1h" }),
+}).then(r => r.json());
+
+// Poll for messages (no body in the list)
+const msgs = await fetch("https://veildrop.fr/api/v1/mail", {
+  headers: { "X-API-Key": created.token },
+}).then(r => r.json());
+console.log(msgs.messages);
+
+// Read one message — it is deleted right after delivery
+const full = await fetch(`https://veildrop.fr/api/v1/mail/${msgs.messages[0].id}`, {
+  headers: { "X-API-Key": created.token },
+}).then(r => r.json());
+console.log(full.body);</pre>
+
+  <h2>Privacy &amp; security</h2>
+  <ul>
+    <li>No cookies, no analytics, no tracking, no JavaScript required.</li>
+    <li>The mnemonic is generated with cryptographic randomness; VeilDrop never stores it — only a hash of your access token is kept.</li>
+    <li>All SQL is parameterized; all inputs are validated, sanitized and length-capped; email headers are CRLF-stripped (no injection).</li>
+    <li>Messages are deleted on expiry; hard-purged from EU storage within 24 hours.</li>
+    <li>Mailboxes can be end-to-end encrypted (E2EE): emails are locked with your public key before touching the database — see §1b above.</li>
+    <li>Abuse reporting: <a href="https://report.veildrop.fr">report.veildrop.fr</a>.</li>
+    <li>Legal: <a href="/#/legal">Legal notices</a> · <a href="/#/privacy">Privacy</a> · <a href="/#/terms">Terms</a></li>
+  </ul>
+  </div>
+
+  <div data-lang="fr">
+  <h2>Pourquoi pas d'API key ?</h2>
+  <p>Votre <strong>phrase de récupération de 15 mots</strong> EST la clé. L'ID de la boîte est dérivé cryptographiquement de la phrase (SHA-256) : posséder la phrase prouve que vous êtes propriétaire. Rien à enregistrer, rien à fuiter, rien à faire tourner. Créez la boîte avec votre phrase, relisez-la avec la même phrase — même des années plus tard. Un <strong>jeton d'accès</strong> court est aussi délivré à la création pour plus de confort (pas d'espaces à encoder dans l'URL).</p>
+
+  <h2>Démarrage rapide</h2>
+  <div class="quick">
+    <div class="q"><b>📥 Recevoir</b><span>Créez une boîte, interrogez les messages</span></div>
+    <div class="q"><b>📤 Envoyer</b><span>Envoyez des emails anonymes avec Reply-To</span></div>
+    <div class="q"><b>🔑 Récupérer</b><span>Même phrase = même adresse, toujours</span></div>
+    <div class="q"><b>🔥 Brûler</b><span>Supprimez définitivement une boîte en un appel</span></div>
+  </div>
+
+  <h2>Endpoints <button class="copy" data-copy="base">copier la base</button></h2>
+  <table>
+    <tr><th>Méthode</th><th>Endpoint</th><th>Fonction</th></tr>
+    <tr><td><span class="meth m-post">POST</span></td><td><code>/api/v1/inbox</code></td><td>Créer une boîte (renvoie mnémonique + jeton)</td></tr>
+    <tr><td><span class="meth m-get">GET</span></td><td><code>/api/v1/mail</code></td><td>Lister les messages (métadonnées seules, <strong>pas de corps</strong>)</td></tr>
+    <tr><td><span class="meth m-get">GET</span></td><td><code>/api/v1/mail/:msgId</code></td><td>Lecture unique — corps livré, message détruit</td></tr>
+    <tr><td><span class="meth m-post">POST</span></td><td><code>/api/v1/send</code></td><td>Envoyer un email depuis l'adresse de la boîte</td></tr>
+    <tr><td><span class="meth m-post">POST</span></td><td><code>/api/v1/extend</code></td><td>Prolonger la durée de vie</td></tr>
+    <tr><td><span class="meth m-del">DELETE</span></td><td><code>/api/v1/mail</code></td><td>Brûler la boîte définitivement</td></tr>
+    <tr><td><span class="meth m-get">GET</span></td><td><code>/api/v1/status</code></td><td>Statut du service &amp; limites</td></tr>
+  </table>
+  <p>URL de base : <code>https://veildrop.fr</code>. Toutes les réponses sont en JSON. Authentification : passez votre clé (mnémonique <em>ou</em> jeton) en <code>?key=...</code> ou via l'en-tête <code>X-API-Key</code>. <strong>La clé suffit à identifier la boîte — aucun ID dans l'URL.</strong></p>
+
+  <h2>1. Créer une boîte</h2>
+  <pre><span class="c"># Création — le serveur génère votre mnémonique de 15 mots ET un jeton d'accès court.
+# Gardez les deux : le jeton pour la simplicité, la mnémonique pour la récupération.</span>
+curl -X POST https://veildrop.fr/api/v1/inbox \
+  -H "Content-Type: application/json" \
+  -d '{"ttl":"10m"}'
+
+<span class="c"># → {"inbox_id":"8f14e45f...","address":"8f14e45fceea167a@veildrop.fr",
+#    "mnemonic":"maid tissue pear room ... peace bacon",
+#    "token":"51d5720a64aa494ab377f5c530a3f68e",
+#    "auth":"mnemonic","key":"maid tissue pear room ... peace bacon",...}</span>
+
+<span class="c"># Adresse déterministe depuis votre propre mnémonique de 15 mots — toujours la même adresse</span>
+curl -X POST https://veildrop.fr/api/v1/inbox \
+  -H "Content-Type: application/json" \
+  -d '{"mnemonic":"abandon ability able about above absent absorb abstract absurd abuse access accident","ttl":"1d"}'</pre>
+  <div class="note">💡 <strong>Récupération :</strong> recréez la même boîte à tout moment en envoyant la même mnémonique. L'adresse et l'ID sont dérivés de la phrase seule — rien n'est stocké côté serveur.</div>
+
+  <h2>1b. Boîtes chiffrées de bout en bout (E2EE)</h2>
+  <pre><span class="c"># Générez une paire RSA côté client, enveloppez la clé privée avec une clé
+# dérivée de votre mnémonique (KEK = SHA-256 de la phrase), puis envoyez :
+#   pubkey      = export SPKI, base64
+#   privkey_enc = base64(iv) + ":" + base64(AES-GCM(KEK, PKCS8))</span>
+curl -X POST https://veildrop.fr/api/v1/inbox \
+  -H "Content-Type: application/json" \
+  -d '{"mnemonic":"abandon ability able ...","ttl":"1d","e2ee":true}'
+
+<span class="c"># → {... "e2ee":true,"pubkey":"MIIBIjANBgkq...","privkey_enc":"QdFuF5...:9V4k..."}
+# Le serveur ne stocke QUE la clé publique + la clé privée enveloppée. Les
+# courriels entrants sont chiffrés avec votre clé publique (format encv2:)
+# avant de toucher la base. Personne — opérateur inclus — ne peut déchiffrer
+# sans la mnémonique.</span>
+
+<span class="c"># Lecture : les réponses liste/détail incluent "e2ee":true et "privkey_enc".
+# Développez la clé privée dans votre navigateur et déchiffrez chaque champ encv2: :
+#   encv2:&lt;b64(RSA-OAEP(public, dataKey))&gt;:&lt;b64(iv)&gt;:&lt;b64(cipher)&gt;
+# Champ = RSA-OAEP-unwrap(dataKey) puis AES-256-GCM-decrypt(iv, dataKey, cipher).</span>
+curl -X GET "https://veildrop.fr/api/v1/mail?key=VOTRE_JETON"</pre>
+  <pre><span class="c"># Exemple Node.js — déchiffrer un message avec votre mnémonique (WebCrypto, Node 22+)</span>
+import { webcrypto } from 'node:crypto';
+const crypto = webcrypto; // global dans Node 22
+const MN = "vos 15 mots ici".split(' ');
+const b64 = (u) => Buffer.from(u).toString('base64');
+const unb64 = (s) => new Uint8Array(Buffer.from(s, 'base64'));
+
+const kek = await crypto.subtle.importKey('raw',
+  new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(MN.join(' ')))),
+  { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+
+const res = await fetch(`https://veildrop.fr/api/v1/inbox/${INBOX_ID}/messages?key=${MN.join(' ')}`);
+const data = await res.json();            // e2ee: true, privkey_enc: "iv:wrapped"
+const [iv, wrapped] = data.privkey_enc.split(':');
+const pkcs8 = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(iv) }, kek, unb64(wrapped));
+const privKey = await crypto.subtle.importKey('pkcs8', pkcs8, { name: 'RSA-OAEP', hash: 'SHA-256' }, false, ['decrypt']);
+
+async function decryptField(field) {
+  if (!field || !field.startsWith('encv2:')) return field;
+  const [_, dkw, iv2, ct] = field.split(':');
+  const dk = await crypto.subtle.decrypt({ name: 'RSA-OAEP' }, privKey, unb64(dkw));
+  const aesKey = await crypto.subtle.importKey('raw', dk, { name: 'AES-GCM' }, false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(iv2) }, aesKey, unb64(ct));
+  return new TextDecoder().decode(plain);
+}
+const m = data.messages[0];
+console.log(await decryptField(m.subject), await decryptField(m.body_enc));</pre>
+  <div class="note">⚠️ <strong>Contreparties :</strong> le serveur ne peut pas analyser les boîtes E2EE pour détecter abus ou malwares, et l'export RGPD renvoie les données chiffrées brutes (avec vos clés). Les courriels sortants passent toujours par le SMTP standard. Deux modes : laissez le serveur générer la paire (envoyez <code>e2ee:true</code> — la mnémonique transite à la création mais n'est jamais stockée), ou générez la paire vous-même et envoyez <code>pubkey</code> + <code>privkey_enc</code> (la mnémonique ne touche jamais le réseau, comme le client web).</div>
+
+  <h2>2. Lire les messages (lecture unique)</h2>
+  <p><strong>Politique de lecture unique :</strong> la liste ne renvoie que des <em>métadonnées</em> (expéditeur, objet, pièces jointes, date — jamais le corps). Ouvrir un message livre son contenu complet et le <strong>détruit immédiatement</strong>. Une lecture = une copie, garanti.</p>
+  <pre><span class="c"># Une seule variable, c'est tout ce que vous aurez à coller :</span>
+KEY="51d5720a64aa494ab377f5c530a3f68e"
+
+curl -H "X-API-Key: $KEY" https://veildrop.fr/api/v1/mail
+<span class="c"># → {"address":"8f14e45fceea167a@veildrop.fr","messages":[{ "id":"...","from":"sender@x.com",
+#      "subject":"Verify your account","has_attachments":false,"attachments":[],
+#      "received_at":...,"is_read":false}],...}
+# PAS de corps dans la liste — le corps n'est livré qu'à la lecture.</span>
+
+<span class="c"># Lecture unique — renvoie le message complet, puis le supprime côté serveur :</span>
+curl -H "X-API-Key: $KEY" https://veildrop.fr/api/v1/mail/MESSAGE_ID
+<span class="c"># → { ..., "body":"...", "body_html":"...", "attachments":[...], "deleted_after_read":true }</span></pre>
+
+  <h2>3. Envoyer un email</h2>
+  <pre>curl -X POST -H "X-API-Key: $KEY" -H "Content-Type: application/json" \
+  https://veildrop.fr/api/v1/send \
+  -d '{"to":"quelquun@exemple.com","subject":"Bonjour","body":"Texte brut","body_html":"<b>HTML</b>"}'
+
+<span class="c"># → {"ok":true,"email_id":"...","smtp_remaining":190,"provider":"sendpulse"}</span></pre>
+  <p>L'adresse de la boîte est définie comme <strong>Reply-To</strong> : le destinataire peut répondre et la réponse arrive dans votre boîte. Pièces jointes : <code>attachments:[{filename, content(base64), mimeType}]</code> (max 10 fichiers, 5 Mo chacun, total ≤ 25 Mo).</p>
+
+  <h2>4. Prolonger la durée de vie</h2>
+  <pre>curl -X POST -H "X-API-Key: $KEY" -H "Content-Type: application/json" \
+  https://veildrop.fr/api/v1/extend -d '{"ttl":"1h"}'
+<span class="c"># → {"ok":true,"expires_at":...,"ttl_seconds":3600}</span></pre>
+  <table>
+    <tr><th>Valeur ttl</th><th>Durée de vie</th></tr>
+    <tr><td><code>10m</code></td><td>10 minutes (par défaut)</td></tr>
+    <tr><td><code>1h</code></td><td>1 heure</td></tr>
+    <tr><td><code>1d</code></td><td>1 jour</td></tr>
+    <tr><td><code>20d</code></td><td>20 jours (max)</td></tr>
+  </table>
+
+  <h2>5. Brûler une boîte</h2>
+  <pre>curl -X DELETE -H "X-API-Key: $KEY" https://veildrop.fr/api/v1/mail
+<span class="c"># → {"ok":true,"message":"Inbox permanently deleted"}</span></pre>
+  <p><em>Forme longue</em> (avec l'ID de boîte) toujours disponible : <code>/api/v1/inbox/:id/messages</code>, <code>/api/v1/inbox/:id/message/:messageId</code>, <code>/api/v1/inbox/:id/send</code>, <code>/api/v1/inbox/:id/extend</code>, <code>DELETE /api/v1/inbox/:id</code> — avec les mêmes règles de lecture unique.</p>
+
+  <h2>RGPD</h2>
+  <p>Vos données, votre contrôle — ces deux endpoints exigent votre clé (mnémonique ou jeton) :</p>
+  <pre><span class="c"># Tout exporter (corps complets inclus, contenus des pièces jointes exclus par conception) :</span>
+curl -H "X-API-Key: $KEY" https://veildrop.fr/api/gdpr/export/:inboxId
+
+<span class="c"># Suppression définitive de toutes les données :</span>
+curl -X POST -H "X-API-Key: $KEY" https://veildrop.fr/api/gdpr/delete/:inboxId</pre>
+
+  <h2>Limites &amp; usage raisonnable</h2>
+  <ul>
+    <li>Pas de spam ni d'envoi abusif — le service est destiné à un usage légitime d'email temporaire (inscriptions, vérifications, tests).</li>
+    <li>Envoi sortant : 200 emails/jour pour tout le service, ~10/heure par IP.</li>
+    <li>Création de boîtes : ~10/heure par IP. Lectures de messages : ~60/heure par boîte.</li>
+    <li>Boîtes et messages expirent automatiquement ; les données sont purgées des serveurs UE (Cloudflare D1, région Londres) sous 24 h après expiration.</li>
+    <li>Tous les emails contiennent un avertissement d'expéditeur et un lien de signalement d'abus.</li>
+  </ul>
+
+  <h2>Codes d'erreur</h2>
+  <table>
+    <tr><th>Code</th><th>Signification</th></tr>
+    <tr><td><code>400</code></td><td>Requête malformée ou entrée invalide</td></tr>
+    <tr><td><code>401</code></td><td>Clé invalide ou absente (mnémonique ou jeton)</td></tr>
+    <tr><td><code>403</code></td><td>Adresse réservée / IP bloquée</td></tr>
+    <tr><td><code>404</code></td><td>Boîte ou message introuvable / expiré</td></tr>
+    <tr><td><code>409</code></td><td>Adresse déjà prise</td></tr>
+    <tr><td><code>413</code></td><td>Corps de requête trop volumineux</td></tr>
+    <tr><td><code>429</code></td><td>Limite de débit dépassée</td></tr>
+    <tr><td><code>500</code></td><td>Erreur serveur (côté fournisseur, aucun détail divulgué)</td></tr>
+    <tr><td><code>503</code></td><td>Service temporairement désactivé</td></tr>
+  </table>
+
+  <h2>Exemple : Python</h2>
+  <pre>import requests
+
+BASE = "https://veildrop.fr"
+MNEMONIC = "abandon ability able about above absent absorb abstract absurd abuse access accident"
+
+r = requests.post(f"{BASE}/api/v1/inbox", json={"mnemonic": MNEMONIC, "ttl": "1d"})
+inbox = r.json()
+print("Adresse :", inbox["address"], "| Jeton :", inbox["token"])
+
+msgs = requests.get(f"{BASE}/api/v1/mail",
+                    headers={"X-API-Key": inbox["token"]}).json()
+for m in msgs["messages"]:
+    print(m["from"], "-", m["subject"])
+    full = requests.get(f"{BASE}/api/v1/mail/{m['id']}",
+                        headers={"X-API-Key": inbox["token"]}).json()
+    print(full["body"])  # lecture unique : le message est maintenant détruit</pre>
+
+  <h2>Exemple : JavaScript (Node)</h2>
+  <pre>const MNEMONIC = "abandon ability able about above absent absorb abstract absurd abuse access accident";
+
+// Créer / récupérer la boîte
+const created = await fetch("https://veildrop.fr/api/v1/inbox", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ mnemonic: MNEMONIC, ttl: "1h" }),
+}).then(r => r.json());
+
+// Interroger les messages (pas de corps dans la liste)
+const msgs = await fetch("https://veildrop.fr/api/v1/mail", {
+  headers: { "X-API-Key": created.token },
+}).then(r => r.json());
+console.log(msgs.messages);
+
+// Lire un message — il est supprimé juste après sa livraison
+const full = await fetch(`https://veildrop.fr/api/v1/mail/${msgs.messages[0].id}`, {
+  headers: { "X-API-Key": created.token },
+}).then(r => r.json());
+console.log(full.body);</pre>
+
+  <h2>Confidentialité &amp; sécurité</h2>
+  <ul>
+    <li>Pas de cookies, pas d'analytics, pas de tracking, aucun JavaScript requis.</li>
+    <li>La mnémonique est générée avec une aléatoire cryptographique ; VeilDrop ne la stocke jamais — seul un hash de votre jeton d'accès est conservé.</li>
+    <li>Tout le SQL est paramétré ; toutes les entrées sont validées, assainies et limitées en longueur ; les en-têtes d'email sont nettoyés des CRLF (aucune injection possible).</li>
+    <li>Les messages sont supprimés à l'expiration ; purge complète du stockage UE sous 24 h.</li>
+    <li>Les boîtes peuvent être chiffrées de bout en bout (E2EE) : les courriels sont verrouillés avec votre clé publique avant de toucher la base — voir §1b ci-dessus.</li>
+    <li>Signalement d'abus : <a href="https://report.veildrop.fr">report.veildrop.fr</a>.</li>
+    <li>Légal : <a href="/#/legal">Mentions légales</a> · <a href="/#/privacy">Confidentialité</a> · <a href="/#/terms">CGU</a></li>
+  </ul>
+  </div>
+
+  <footer>© 2026 VeilDrop — Temporary &amp; anonymous email · <a href="https://veildrop.fr">Back to the app · Retour à l'app</a> · <a href="https://veildrop.fr/#/help">Help · Aide</a> · <a href="https://discord.gg/BxDXa8c2vE">Discord</a></footer>
+</div>
+<script>
+(function () {
+  var LANG = localStorage.getItem('veildrop_api_lang') || 'en';
+  if (new URLSearchParams(location.search).get('lang') === 'fr') LANG = 'fr';
+  var btn = document.getElementById('lang-toggle');
+  function apply(lang) {
+    LANG = lang;
+    document.querySelectorAll('[data-lang]').forEach(function (el) {
+      el.classList.toggle('active', el.dataset.lang === lang);
+    });
+    btn.innerHTML = lang === 'en' ? '🇫🇷&nbsp;FR' : '🇬🇧&nbsp;EN';
+    btn.title = lang === 'en' ? 'Passer en français' : 'Switch to English';
+    localStorage.setItem('veildrop_api_lang', lang);
+  }
+  btn.addEventListener('click', function () { apply(LANG === 'en' ? 'fr' : 'en'); });
+  apply(LANG);
+})();
+document.querySelectorAll('.copy').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.copy;
+    if (target === 'base') { navigator.clipboard.writeText('https://veildrop.fr'); btn.textContent = 'copied'; setTimeout(() => btn.textContent = 'copy base', 1500); return; }
+  });
+});
+</script>
+</body>
+</html>

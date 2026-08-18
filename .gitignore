@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.wrangler/
+.dev.vars
+.env
+*.log
+.DS_Store
+_worker.bundle
+wrangler.toml.production
+wrangler.toml.local
+*.local

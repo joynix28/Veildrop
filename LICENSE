@@ -1,0 +1,66 @@
+VeilDrop Open Source License v1.0
+=================================
+
+Copyright (c) 2026 joynix28 (JN) — VeilDrop
+Author / rightful owner: joynix28
+Contact: contact@veildrop.fr — https://veildrop.fr — https://discord.gg/BxDXa8c2vE
+
+This project is open source. You are free to use, study, modify, copy,
+distribute, and share this software, subject to the two mandatory conditions
+below. These conditions are non-negotiable and apply to every use, including
+personal, educational, community, and institutional use.
+
+1) ATTRIBUTION (obligatory in every case)
+-----------------------------------------
+Any use, reproduction, modification, fork, derivative work, deployment,
+publication, or redistribution of this software — in whole or in part, in any
+form, including self-hosted instances, modified versions, or code extracted
+from it — MUST visibly and durably credit the original author:
+
+    "VeilDrop — by joynix28 — https://veildrop.fr — open source
+     (VeilDrop Open Source License v1.0)"
+
+The attribution must appear:
+- in the README, "About" section, or equivalent main description of any
+  derived project or fork;
+- in a "credits" or "license" section of any application, website, or service
+  that uses this software;
+- and in any documentation or promotional material describing the software.
+
+No alternative attribution may be substituted. The author's name must not be
+removed, altered, or obscured in the source files that carry it.
+
+2) NO COMMERCIAL USE WITHOUT WRITTEN CONSENT (obligatory)
+---------------------------------------------------------
+This software may NOT be used, directly or indirectly, to generate revenue,
+in any form whatsoever, WITHOUT the prior explicit WRITTEN consent of the
+author (joynix28). This includes, without limitation:
+
+- selling the software, a fork of it, or a service built on it;
+- charging users, subscriptions, paywalls, paid tiers;
+- monetization via advertising, sponsorship, or user data collection;
+- providing the software "as a service" (SaaS / hosted service) for a fee;
+- incorporating it into a paid product or a product that directly or
+  indirectly generates income;
+- using it for commercial client work or as part of a paid service.
+
+FREE, non-profit, personal, educational, and community use is always allowed
+under condition 1. If you wish to use this software commercially, contact the
+author in writing (email: contact@veildrop.fr) and obtain written consent
+first. The author may grant consent free of charge or under mutually agreed
+terms.
+
+3) NO WARRANTY / LIABILITY
+--------------------------
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+4) GOVERNING LAW
+----------------
+This license is governed by French law. Any dispute shall be subject to the
+exclusive jurisdiction of the French courts.
