@@ -277,3 +277,4 @@ TL;DR:
 ---
 
 *VeilDrop — Your Privacy, Delivered. · Votre Vie Privée, Livrée.*
+**Thank you fox3000foxy for giving me the idea to create this**
